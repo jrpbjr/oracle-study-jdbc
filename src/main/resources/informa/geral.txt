@@ -1,0 +1,49 @@
+--CRIANDO A SEQUENCE
+CREATE SEQUENCE seq_id_usuario
+MINVALUE 1  
+MAXVALUE 9999999999
+START WITH 1       
+INCREMENT BY 1;
+------------------------------------------
+--CRIANDO A TABELA
+CREATE TABLE tb_usuario(
+    id_usuario INT NOT NULL PRIMARY KEY,  
+    ds_login   VARCHAR(20),
+    ds_senha   VARCHAR(20),
+    fl_ativo   NUMBER(1)
+ 
+);
+
+-------------------------------------------
+CREATE OR REPLACE TRIGGER tr_insert_id_usuario
+                  BEFORE INSERT ON tb_usuario FOR EACH ROW       
+BEGIN
+ 
+SELECT seq_id_usuario.NEXTVAL
+INTO :NEW.id_usuario
+FROM DUAL;
+END;
+
+
+
+---------------------------------------------
+http://localhost:porta/service/usuario   -> PUT    - execução para atualização.
+http://localhost:porta/service/usuario/1 -> GET    - consulta um registro pela chave.
+http://localhost:porta/service/usuario   -> GET    - consulta todos os registros.
+http://localhost:porta/service/usuario   -> POST   - cadastra um novo registro.
+http://localhost:porta/service/usuario/1 -> DELETE - exclui um registro pela chave.
+---------------------------------------------
+
+http://localhost:porta/service/usuario
+
+{
+	"login":"cicero20",
+	"senha":"123456",
+	"ativo":0
+}
+
+
+
+
+
+
